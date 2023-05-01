@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class LinkedBinarySearchTree<E extends Comparable<E>> implements BinarySearchTree<E> {
     //Private variables
     private E data; // Root's element
@@ -147,4 +149,35 @@ public class LinkedBinarySearchTree<E extends Comparable<E>> implements BinarySe
     public String toString(){
         return "Tree:" + "\n" + "Pre:" + "\t" + this.toStringPreOrder() +"\n"+ "In:"+ "\t\t"+ this.toStringInOrder() + "\n" + "Post:" + "\t" + this.toStringPostOrder();
     }
+
+    public void arraylistToBST(ArrayList list){
+        arraylistToBST(list, 0, list.size()-1);
+    }
+    public void arraylistToBST(ArrayList list, int start, int end){
+        if(start<=end){
+            int mid = (start + end) / 2;
+            this.insert((E) list.get(mid));
+            arraylistToBST( list,mid+1,end);
+            arraylistToBST(list,start,mid-1);
+        }
+    }
+
+    public boolean contains(E e){
+
+        if(e.compareTo(this.data)==0){
+            return true;
+        }
+        else if(e.compareTo(this.data)<0 && !leftSubTree.isEmpty()){
+            return leftSubTree.contains(e);
+        }
+        else if(e.compareTo(this.data)>0 && !rightSubTree.isEmpty()){
+            return rightSubTree.contains(e);
+        }
+        else{
+            return  false;
+        }
+    }
+
+
+
 }
