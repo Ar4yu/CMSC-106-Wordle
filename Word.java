@@ -1,6 +1,12 @@
 public class Word {
 private String word;
 private Characters[] wordArray;
+    
+    /**
+    * checks to see if user input is a 5 letter word, if it is not, it throws an exception
+    * creates a new array of characters if user's guess is a 5 letter word
+    * param word - word 
+    */
 
 public Word(String word){
     if(word.length()!=5){
@@ -14,22 +20,48 @@ public Word(String word){
     }
 }
 
+    /**
+    * gets word 
+    */
+    
     public String getWord() {
         return word;
     }
 
+    /**
+    * sets word
+    * param word - word 
+    */
+    
     public void setWord(String word) {
         this.word = word;
     }
 
+    /**
+    * gets array of characters for given guess 
+    */
+    
     public Characters[] getWordArray() {
         return wordArray;
     }
 
+    /**
+    * sets array of characters for given guess
+    * param Characters[] wordArray 
+    */
+    
     public void setWordArray(Characters[] wordArray) {
         this.wordArray = wordArray;
     }
 
+    /**
+    * compares characters in the answer to the characters in the same position in the user's guess
+    * if the character in the answer matches the position and character of the user's guess, the user's character is assigned type 2
+    * if the character in the answer matches a character in the user's guess, but they are in different positions in the array, the user's character is assigned type 1
+    * if the character in the answer does not match a character in the user's guess, the character in the user's guess is assigned type 0
+    * param Word other 
+    */
+    
     public void checkPosition(Word other){
     Characters[] word1 = this.getWordArray();
     Characters[] word2 = other.getWordArray();
@@ -45,6 +77,11 @@ public Word(String word){
     }
     }
 
+    
+    /**
+    * compares users guess to answer
+    * param Word other 
+    */
 
     public int compareTo(Word other){
     return this.getWord().compareTo(other.getWord());
