@@ -177,7 +177,17 @@ public class LinkedBinarySearchTree<E extends Comparable<E>> implements BinarySe
             return  false;
         }
     }
-
+    public int depth() {
+        // If the tree is empty, the depth is 0
+        if (isEmpty()) {
+            return 0;
+        }
+        // Compute the depth of the left and right subtrees recursively
+        int leftDepth = leftSubTree.depth();
+        int rightDepth = rightSubTree.depth();
+        // The depth of the tree is 1 more than the maximum depth of its subtrees
+        return 1 + Math.max(leftDepth, rightDepth);
+    }
 
 
 }
