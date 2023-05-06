@@ -4,16 +4,18 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Game {
+    //Instance variables for displaying colour
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_YELLOW = "\u001B[33m";
     //private LinkedBinarySearchTree sortedBST = new LinkedBinarySearchTree();
 
     public static void main(String[] args){
+        //Intro message
         System.out.println("-------------------");
         System.out.println("-Welcome To Wordle-");
         System.out.println("-------------------");
-
+        //Reading in the file
         CSVReader reader = new CSVReader();
         FileReader input = null;
         try {
@@ -26,26 +28,32 @@ public class Game {
         ArrayList<Word> answers = new ArrayList<Word>();
         for(String[] j: myEntries){
             Word w = new Word(j[0]);
-            answers.add(w);
+            answers.add(w);//adding words to the list
         }
-        sort(answers);
+        sort(answers);//sorting the list
 
-        int wordVal = (int) (answers.size()*Math.random());
+        int wordVal = (int) (answers.size()*Math.random());//random word to guess
         Word answer = answers.get(wordVal);
         //System.out.println(answer.toString());
-        int count = 0;
+        int count = 0;//counter to check 6 guesses
         //System.out.println(answers);
-        ArrayList <Word> list = new ArrayList<Word>();
+        ArrayList <Word> list = new ArrayList<Word>();//list for display
 
         LinkedBinarySearchTree searchTree = new LinkedBinarySearchTree();
         searchTree.arraylistToBST(answers);
+        //Creating an arraylist of characters to display characters left
+        ArrayList<Characters> remainChar = new ArrayList<>();
+        for(char c = 'a'; c<='z';c++){
+            Characters ch = new Characters(c);
+            remainChar.add(ch);
+        }
 
 
-        while(count < 6){
+        while(count < 6){//Game loop
             Scanner myObj = new Scanner(System.in);  // Create a Scanner object
             System.out.print("Enter guess: ");
             String guess = myObj.nextLine();// Read user input
-            if(isWord(guess)){
+            if(isWord(guess)){//checking if it is a word
                 Word guessVal = new Word(guess);
                 if(!searchTree.contains(guessVal)){
                     System.out.println("Invalid word, guess again");
@@ -57,21 +65,53 @@ public class Game {
                 continue;
             }
             Word guessVal = new Word(guess);
-            answer.checkPosition(guessVal);
-            display(guessVal, list);
-            if(guessVal.getWord().toLowerCase().equals(answer.getWord().toLowerCase())){
+            answer.checkPosition(guessVal);//updating guess words characters type
+            display(guessVal, list);//display
+            //Updating remaining characters
+            for (Characters ch1: guessVal.getWordArray()){
+                for (Characters ch2: remainChar){
+                    if(ch1.isEqual(ch2)){
+                        if(ch1.getType()==0){
+                            ch2.setType(0);
+                        }
+                        else if(ch1.getType()==1){
+                            if(ch2.getType()!=2) {//if its green, we do not want it to go back to yellow
+                                ch2.setType(1);
+                            }
+                        }
+                        else{
+                            ch2.setType(2);
+                        }
+                    }
+                }
+            }
+
+            if(guessVal.getWord().toLowerCase().equals(answer.getWord().toLowerCase())){//win case
                 System.out.println("Congratulations you have won!!!!");
                 break;
             }
+            //Printing remaining characters
+            System.out.print("Remaining characters are: ");
+            for(Characters ch: remainChar){
+                if(ch.getType() == -1){
+                    System.out.print(ch + ",");
+                }
+                else if(ch.getType() == 1){
+                    System.out.print(ANSI_YELLOW  + ch + ANSI_RESET + ",");
+                }else if(ch.getType() == 2){
+                    System.out.print(ANSI_GREEN + ch + ANSI_RESET + ",");
+                }
+            }
+            System.out.println("");
             count ++;
         }
 
-        if(count==6){
+        if(count==6){//lose case
             System.out.println("Oh no! You reached 6 guesses. You lose!");
             System.out.println("The answer was: " + answer);
         }
         Scanner myObj = new Scanner(System.in);
-        System.out.println("Would you like to play again (type 'y' if you do)");
+        System.out.println("Would you like to play again (type 'y' if you do)");//checking if player wants to play again
         String guess = myObj.nextLine();
         if(guess.compareToIgnoreCase(('y'+""))==0){
             String[] s = null;
