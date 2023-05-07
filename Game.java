@@ -10,6 +10,11 @@ public class Game {
     public static final String ANSI_YELLOW = "\u001B[33m";
     //private LinkedBinarySearchTree sortedBST = new LinkedBinarySearchTree();
 
+
+    /**
+     * Main function used to run the program, prompt the user, and initialize various data structures
+     * @param args takes the users guesses
+     */
     public static void main(String[] args){
         //Intro message
         System.out.println("-------------------");
@@ -121,31 +126,42 @@ public class Game {
             System.out.println("Goodbye! :)");
         }
     }
+
+    /**
+     * Display prints each letter of the word in the correct color, gray, yellow, or green
+     * @param guess takes the users guess as input
+     * @param list  all the guesses previously made by the user
+     */
     public static void display(Word guess, ArrayList<Word> list){
         list.add(guess);
         for(Word w: list){
             Characters[] cList = w.getWordArray();
-            for(int i = 0; i < 5; i ++){
-                if(cList[i].getType() == 0){
+            for(int i = 0; i < 5; i ++){ //loops through the users guess
+                if(cList[i].getType() == 0){ //if the given letter is of type 0, it is printed in gray
                     System.out.print(cList[i]);
                 }
                 else if(cList[i].getType() == 1){
-                    System.out.print(ANSI_YELLOW  + cList[i] + ANSI_RESET);
+                    System.out.print(ANSI_YELLOW  + cList[i] + ANSI_RESET); //if the given letter is of type 1, it is printed in yellow
                 }else{
-                    System.out.print(ANSI_GREEN + cList[i] + ANSI_RESET);
+                    System.out.print(ANSI_GREEN + cList[i] + ANSI_RESET); //if the given letter is not type 0 or 1, it is printed in red
                 }
             }
             System.out.println();
         }
     }
 
+    /**
+     * Used to check if the users guess is a five-letter word
+     * @param word the word that the user guessed
+     * @return a boolean, true if the passed word is a 5-letter word, false if not
+     */
     public static boolean isWord(String word){
         word = word.toLowerCase();
-        if(word.length()!=5){
+        if(word.length()!=5){ //returns false if the word is not of length 5
             return false;
         }
         else{
-            for(int i =0; i < 5; i++){
+            for(int i =0; i < 5; i++){ //loops through the word and check if each letter is between or equal to a and z
                 char c = word.charAt(i);
               if(!('a'<=c && c<='z'))  {
                   return false;
@@ -155,6 +171,10 @@ public class Game {
         }
     }
 
+    /**
+     * Used to sort all possible 5-letter words that the user could guess
+     * @param list the unsorted list of all possible 5-letter words
+     */
     public static void sort(ArrayList<Word> list){
 
         int n = list.size();

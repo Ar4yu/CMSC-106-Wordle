@@ -24,7 +24,7 @@ public class Test {
         ArrayList<Double> BST = new ArrayList<>();
         ArrayList<Double> contains = new ArrayList<>();
         System.out.println(answers.size());
-        for(int i =0; i < 10000; i++) {
+        for(int i =0; i < 100000; i++) {
             int wordVal = (int) (answers.size() * Math.random());
             Word answer = answers.get(wordVal);
             double n1 = System.nanoTime();
@@ -44,11 +44,11 @@ public class Test {
         for(double d: BST){
             sum2+=d;
         }
-        double avg1 = sum1/1000000;
-        double avg2 = sum2/1000000;
+        double avg1 = sum1/100000;
+        double avg2 = sum2/100000;
         System.out.println("Average time in nano seconds for contains is: " + avg1);
         System.out.println("Average time in nano seconds for BST is: " + avg2);
-        System.out.println(searchTree.depth());
+        System.out.println("Depth of the BST: " + searchTree.depth());
 
     }
 
