@@ -24,7 +24,7 @@ public class Game {
         CSVReader reader = new CSVReader();
         FileReader input = null;
         try {
-            input = new FileReader("poll_data/5_letter_words.csv");
+            input = new FileReader("src/5_letter_words.csv");
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -163,9 +163,9 @@ public class Game {
         else{
             for(int i =0; i < 5; i++){ //loops through the word and check if each letter is between or equal to a and z
                 char c = word.charAt(i);
-              if(!('a'<=c && c<='z'))  {
-                  return false;
-              }
+                if(!('a'<=c && c<='z'))  {
+                    return false;
+                }
             }
             return true;
         }
@@ -187,10 +187,5 @@ public class Game {
                     list.set(j+1,temp);
                 }
     }
-
-
-
-
-
 
 }
