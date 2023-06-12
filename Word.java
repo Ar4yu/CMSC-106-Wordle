@@ -66,6 +66,7 @@ public Word(String word){
         if(word1[i].isEqual(word2[i])){
             other.wordArray[i].setType(2);
         } else if (this.word.contains(word2[i].getC()+"")) {
+            other.wordArray[i].setType(1);
         }
         else {
             other.wordArray[i].setType(0);
